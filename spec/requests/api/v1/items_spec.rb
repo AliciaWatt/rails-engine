@@ -375,10 +375,6 @@ RSpec.describe "items api requests" do
         expect(Item.exists?(item_id)).to eq(false)
       end
 
-      xit "deletes the invoice" do
-        expect(Invoice.exists?(invoice_id)).to eq(false)
-      end
-
       it "deletes the invoice_item" do
         expect(InvoiceItem.exists?(invoice_item_id)).to eq(false)
       end
