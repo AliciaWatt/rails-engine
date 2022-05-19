@@ -4,7 +4,7 @@ RSpec.describe "PATCH /api/v1/items/:id" do
   context "valid parameters" do
     let!(:merchant) { create(:merchant) }
     let!(:item) { create(:item) }
-    let!(:valid_attributes) { {name: "Steve", description: "Hi Hi", unit_price: 100.3, merchant_id: merchant.id} }
+    let!(:valid_attributes) { {name: "Stan", description: "I am Stan", unit_price: 100.3, merchant_id: merchant.id} }
 
     before(:each) do
       patch "/api/v1/items/#{item.id}", params: valid_attributes
@@ -63,8 +63,8 @@ RSpec.describe "PATCH /api/v1/items/:id" do
 
   context "invalid parameters - bad price" do
     let!(:merchant) { create(:merchant) }
-    let!(:item) { create(:item, name: "Joe") }
-    let!(:invalid_attributes) { {name: "Al", unit_price: "asjb", merchant_id: merchant.id} }
+    let!(:item) { create(:item, name: "Barb") }
+    let!(:invalid_attributes) { {name: "Al", unit_price: "not barb", merchant_id: merchant.id} }
 
     before(:each) do
       patch "/api/v1/items/#{item.id}", params: invalid_attributes
@@ -83,7 +83,7 @@ RSpec.describe "PATCH /api/v1/items/:id" do
   end
 
   context "invalid parameters - bad merchant id" do
-    let!(:item) { create(:item, name: "Joe") }
+    let!(:item) { create(:item, name: "Barb") }
     let!(:invalid_attributes) { {name: "Al", merchant_id: 24} }
 
     before(:each) do
@@ -104,7 +104,7 @@ RSpec.describe "PATCH /api/v1/items/:id" do
 
   context "item doesnt exist" do
     let!(:merchant) { create(:merchant) }
-    let!(:valid_attributes) { {name: "Steve", description: "Hi Hi", unit_price: 100.3, merchant_id: merchant.id} }
+    let!(:valid_attributes) { {name: "Stan", description: "I am Stan", unit_price: 100.3, merchant_id: merchant.id} }
 
     before(:each) do
       patch "/api/v1/items/43", params: valid_attributes

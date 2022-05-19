@@ -57,7 +57,7 @@ RSpec.describe "DESTROY /api/v1/items/:id" do
       expect(Item.exists?(item_id)).to eq(false)
     end
 
-    # xit "deletes the invoice" do
+    # it "deletes the invoice" do
     #   expect(Invoice.exists?(invoice_id)).to eq(false)
     # end
 

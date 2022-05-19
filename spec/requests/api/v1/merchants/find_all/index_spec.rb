@@ -4,7 +4,7 @@ RSpec.describe "api/v1/merchants/find_all" do
   context "happy paths - merchants exist" do
     let!(:merchant_1) { create(:merchant, name: "Baseball Bat") }
     let!(:merchant_2) { create(:merchant, name: "Cricket Bat") }
-    let!(:merchant_3) { create(:merchant, name: "Zebra") }
+    let!(:merchant_3) { create(:merchant, name: "Dog") }
 
     context "search by name when merchants exist" do
       let(:query) { "?name=bat" }
@@ -50,9 +50,9 @@ RSpec.describe "api/v1/merchants/find_all" do
 
   context "sad paths" do
     context "search returns 0 merchants" do
-      let!(:merchant) { create(:merchant, name: "zebra") }
+      let!(:merchant) { create(:merchant, name: "dog") }
       before(:each) do
-        get "/api/v1/merchants/find_all?name=hello"
+        get "/api/v1/merchants/find_all?name=cat"
       end
 
       it "returns status code 200 and empty" do
@@ -71,7 +71,7 @@ RSpec.describe "api/v1/merchants/find_all" do
     end
 
     context "search fields are empty" do
-      let!(:merchant) { create(:merchant, name: "zebra") }
+      let!(:merchant) { create(:merchant, name: "dog") }
       before(:each) do
         get "/api/v1/merchants/find_all?name="
       end
