@@ -95,7 +95,6 @@ This E-Commerce application API provides users access to data about merchants, i
   * get all merchants `GET http://localhost:3000/api/v1/merchants`
   * get one merchant `GET http://localhost:3000/api/v1/merchants/:merchant_id`
   * get all items held by a given merchant `GET http://localhost:3000/api/v1/merchants/:merchant_id/items`
-  * get merchants by most items sold 'GET http://localhost:3000/api/v1/merchants/most_items?quantity=4`
 #### Items:
   * get all items `GET http://localhost:3000/api/v1/items`
   * get one item `GET http://localhost:3000/api/v1/items/:item_id`
