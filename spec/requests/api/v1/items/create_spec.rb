@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "POST /api/v1/items" do
   context "valid parameters" do
     let!(:merchant) { create(:merchant) }
-    let!(:valid_parameters) { {name: "Bob", description: "Some description.", unit_price: 100.23, merchant_id: merchant.id} }
+    let!(:valid_parameters) { {name: "Margo", description: "Some description.", unit_price: 100.23, merchant_id: merchant.id} }
 
     before(:each) do
       post "/api/v1/items", params: valid_parameters
@@ -53,7 +53,7 @@ RSpec.describe "POST /api/v1/items" do
 
   context "invalid parameters" do
     let!(:merchant) { create(:merchant) }
-    let!(:invalid_parameters) { {name: "Bob", description: "Some description.", merchant_id: merchant.id} }
+    let!(:invalid_parameters) { {name: "Margo", description: "Some description.", merchant_id: merchant.id} }
 
     before(:each) do
       post "/api/v1/items", params: invalid_parameters

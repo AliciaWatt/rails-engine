@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe "api/v1/items/find" do
   context "happy paths - items exist" do
-    let!(:item_1) { create(:item, name: "Baseball Bat", unit_price: 7.99) }
-    let!(:item_2) { create(:item, name: "Cricket Bat", unit_price: 107.99) }
-    let!(:item_3) { create(:item, name: "Zebra", unit_price: 2.99) }
+    let!(:item_1) { create(:item, name: "Running Shoe", unit_price: 7.99) }
+    let!(:item_2) { create(:item, name: "Dance Shoe", unit_price: 107.99) }
+    let!(:item_3) { create(:item, name: "umbrella", unit_price: 2.99) }
 
     context "search by name when items exist" do
-      let(:query) { "?name=bat" }
+      let(:query) { "?name=shoe" }
 
       before(:each) do
         get "/api/v1/items/find#{query}"
@@ -107,7 +107,7 @@ RSpec.describe "api/v1/items/find" do
 
   context "sad paths" do
     context "search returns 0 items" do
-      let!(:item) { create(:item, name: "zebra") }
+      let!(:item) { create(:item, name: "rodeo") }
       before(:each) do
         get "/api/v1/items/find?name=hello"
       end
@@ -138,7 +138,7 @@ RSpec.describe "api/v1/items/find" do
     end
 
     context "search fields are empty" do
-      let!(:item) { create(:item, name: "zebra") }
+      let!(:item) { create(:item, name: "umbrella") }
       before(:each) do
         get "/api/v1/items/find?name="
       end
@@ -159,9 +159,9 @@ RSpec.describe "api/v1/items/find" do
     end
 
     context "search fields include both name and min_price" do
-      let!(:item) { create(:item, name: "zebra") }
+      let!(:item) { create(:item, name: "camel") }
       before(:each) do
-        get "/api/v1/items/find?name=zebra&min_price=50"
+        get "/api/v1/items/find?name=camel&min_price=50"
       end
 
       it "returns status code 400 and empty" do
@@ -180,9 +180,9 @@ RSpec.describe "api/v1/items/find" do
     end
 
     context "search fields include both name and max_price" do
-      let!(:item) { create(:item, name: "zebra") }
+      let!(:item) { create(:item, name: "camel") }
       before(:each) do
-        get "/api/v1/items/find?name=zebra&max_price=50"
+        get "/api/v1/items/find?name=camel&max_price=50"
       end
 
       it "returns status code 400 and empty" do
@@ -201,9 +201,29 @@ RSpec.describe "api/v1/items/find" do
     end
 
     context "search fields include name, min_price and max_price" do
-      let!(:item) { create(:item, name: "zebra") }
+      let!(:item) { create(:item, name: "camel") }
       before(:each) do
-        get "/api/v1/items/find?name=zebra&max_price=50&max_price=500"
+        get "/api/v1/items/find?name=camel&min_price=50&max_price=500"
+      end
+
+      it "returns status code 400" do
+        expect(response).to have_http_status(400)
+      end
+
+      it "returns an error response" do
+        json = JSON.parse(response.body, symbolize_names: true)
+        expect(json).to be_a(Hash)
+        expect(json).to have_key(:data)
+        expect(json[:data]).to eq([])
+
+        expect(json).to have_key(:error)
+        expect(json[:error]).to match(/Bad request/)
+      end
+    end
+    context "min_price is greater than max_price" do
+      let!(:item) { create(:item, name: "camel") }
+      before(:each) do
+        get "/api/v1/items/find?&min_price=500&max_price=50"
       end
 
       it "returns status code 400" do
